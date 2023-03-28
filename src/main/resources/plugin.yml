@@ -5,15 +5,7 @@ api-version: 1.19
 author: Austxnsheep
 
 commands:
-  spawnParticle:
-    description: A test to see if this plugin is working (spells plus)
-    usage: /spawnParticle
-    permission: SpellsPlus.spawnParticles
-  addSpell:
-    description: A admin command to add spells to any item
-    usage: /addspell <spell name> <mana cost>
-    permission: SpellsPlus.addSpell
-  setMana:
-    description: Sets the mana of a specified player
-    usage: /setMana <Player name> <Amount of mana>
-    permission: SpellsPlus.setMana
+  spellsPlus:
+    description: Used for allowing admins to change things
+    usage: /spellsplus
+    permission: SpellsPlus.spellsplus
