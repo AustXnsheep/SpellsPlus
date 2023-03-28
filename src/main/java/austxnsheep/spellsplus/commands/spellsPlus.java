@@ -2,10 +2,10 @@ package austxnsheep.spellsplus.commands;
 
 import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
+import austxnsheep.spellsplus.customItems.cICore;
 import austxnsheep.spellsplus.data.dataManager;
 import austxnsheep.spellsplus.data.manaManager;
 import austxnsheep.spellsplus.execution.spellExecutor;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,6 +23,7 @@ public class spellsPlus implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         Player effectedPlayer = getServer().getPlayer(args[1]);
+        cICore cicore = new cICore();
         dataManager datamanager = new dataManager();
         File playerDataFile = datamanager.getPlayerDataFile(player.getUniqueId());
         if (player.isOp()) {
@@ -47,7 +48,7 @@ public class spellsPlus implements CommandExecutor {
                 }
                 case "setmaxmana": {
                     sender.sendMessage("Player's Current mana level: " + manaManager.getCurrentMana(player));
-                    manaManager.setMaxMana(player, Integer.parseInt(args[0]));
+                    manaManager.setMaxMana(player, Integer.parseInt(args[2]));
                     sender.sendMessage("Player's New mana level: " + manaManager.getCurrentMana(player));
                     break;
                 }
@@ -65,12 +66,14 @@ public class spellsPlus implements CommandExecutor {
                     break;
                 }
                 case "addspell": {
-                    if (sender != null) {
-                        String arg1 = args[1];
-                        Integer arg2 = Integer.valueOf(args[2]);
-                        Core.addSpell((Player) sender, arg1, arg2);
+                    String arg1 = args[1];
+                    Integer arg2 = Integer.valueOf(args[2]);
+                    Core.addSpell((Player) sender, arg1, arg2);
 
-                    }
+                    break;
+                }
+                case "giveitem": {
+                    player.getInventory().addItem(cicore.getItem(1));
                     break;
                 }
             }

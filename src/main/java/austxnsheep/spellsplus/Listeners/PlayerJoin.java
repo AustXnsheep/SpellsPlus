@@ -29,9 +29,8 @@ public class PlayerJoin implements Listener {
         cls.getConfig().set(String.valueOf(player.getUniqueId()), 100);
         List<Location> loclist = shapedFunctions.drawCircle(5, player.getLocation(), 5);
         player.setMetadata("CurrentMana", new FixedMetadataValue((Plugin) this, 100));
-        if(!JoinedPlayers.contains(player.getUniqueId())) {
-            datamanager.setPlayerData(player, "MaxMana", 100);
-            datamanager.savePlayerData(player.getUniqueId());
+        if(!player.hasPlayedBefore()) {
+            manaManager.setMaxMana(player, 100);
         }
         for (Location location : loclist) {
             location.getWorld().spawnParticle(Particle.FLAME, location, 50, 1, 1, 1, 0.01);

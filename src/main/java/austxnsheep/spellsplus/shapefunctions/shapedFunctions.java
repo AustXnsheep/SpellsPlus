@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class shapedFunctions {
+    //drawCircle(3, player.getLocation(), 3) <-This would make a circle that is 3 blocks wide and that has 3 points, It by default will have more
     public static List<Location> drawCircle(Integer radius, Location center, Integer numPoints) {
         double increment = 2 * Math.PI / numPoints;
         List<Location> locations = new ArrayList<>();
@@ -19,8 +20,8 @@ public class shapedFunctions {
         }
         return locations;
     }
-    //drawPolygon(Integer sides, Location center, Integer radius)
-    public List<Location> drawPolygon(Integer corners, Location center, Integer radius) {
+    //drawPolygon(3 player.getLocation(), 3)
+    public List<Location> drawPolygon(Integer radius, Location center, Integer corners) {
         World world = center.getWorld();
         double angle = 2 * Math.PI / corners;
         List<Location> locations = new ArrayList<>();
@@ -33,7 +34,7 @@ public class shapedFunctions {
         }
         return locations;
     }
-
+    //DrawLine(Location 1, Location 2, Amount of particles in the line)
     public List<Location> drawLine(Location start, Location end, int particles) {
         World world = start.getWorld();
         double distance = start.distance(end);
