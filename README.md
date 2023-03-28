@@ -1,7 +1,7 @@
 # Spells Plus
   This plugin adds magic-themed features to Minecraft, including new spells, magical items, and special effects.
 
-**<span style="color:red;">This plugin is very new</span>**
+**THIS PLUGIN IS VERY NEW AND IS MISSING A LOT OF CONTENT**
 
 # Features:
 Powerful spells: Players can learn and cast a variety of spells, including offensive and defensive spells, teleportation spells, and more.
@@ -22,7 +22,7 @@ Finally, the plugin adds a range of special effects for magic-related actions, s
 The plugin can be configured using a YAML configuration file, which allows server owners to customize the plugin's settings and behavior.
 
 # Known bugs:
-The lack of half of what this file says
+Half of what this file says it does not currently contain
 
 # Contributing:
 Contributions to the plugin are welcome and encouraged! If you encounter any bugs or issues, please report them on the GitHub issues page. If you would like to contribute code, simply fork the repository, make your changes, and submit a pull request.
