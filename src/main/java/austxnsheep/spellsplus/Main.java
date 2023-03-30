@@ -1,27 +1,27 @@
 package austxnsheep.spellsplus;
 //My Imports
+
 import austxnsheep.spellsplus.Listeners.HandSwitch;
-import static austxnsheep.spellsplus.Core.Enable;
 import austxnsheep.spellsplus.Listeners.PlayerJoin;
-//Others
 import austxnsheep.spellsplus.commands.spellsPlus;
+import austxnsheep.spellsplus.data.dataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.Objects;
-import java.util.UUID;
+
+import static austxnsheep.spellsplus.Core.Enable;
 
 
 public final class Main extends JavaPlugin {
     private int totalmana = 0;
     @Override
     public void onEnable() {
+        dataManager datamanager = new dataManager();
+        datamanager.saveAllPlayerData();
         this.reloadConfig();
         this.saveDefaultConfig();
         this.registerEvent(new PlayerJoin());
@@ -36,6 +36,8 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        dataManager datamanager = new dataManager();
+        datamanager.saveAllPlayerData();
         this.saveDefaultConfig();
         // Plugin shutdown logic
     }

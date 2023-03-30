@@ -1,7 +1,6 @@
 package austxnsheep.spellsplus.Listeners;
 
 import austxnsheep.spellsplus.Main;
-import austxnsheep.spellsplus.data.dataManager;
 import austxnsheep.spellsplus.data.manaManager;
 import austxnsheep.spellsplus.shapefunctions.shapedFunctions;
 import org.bukkit.Location;
@@ -22,12 +21,11 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         //drawPolygon(Integer sides, Location center, Integer radius)
-        dataManager datamanager = new dataManager();
         Plugin cls = new Main();
         Player player = event.getPlayer();
         Location loc = player.getLocation();
         cls.getConfig().set(String.valueOf(player.getUniqueId()), 100);
-        List<Location> loclist = shapedFunctions.drawCircle(5, player.getLocation(), 5);
+        List<Location> loclist = shapedFunctions.drawCircle(5, player.getLocation(), 0, 0);
         player.setMetadata("CurrentMana", new FixedMetadataValue((Plugin) this, 100));
         if(!player.hasPlayedBefore()) {
             manaManager.setMaxMana(player, 100);
@@ -35,7 +33,6 @@ public class PlayerJoin implements Listener {
         for (Location location : loclist) {
             location.getWorld().spawnParticle(Particle.FLAME, location, 50, 1, 1, 1, 0.01);
         }
-        loc.getWorld().spawnParticle(Particle.FLAME, (Location) shapedFunctions.drawCircle(5, player.getLocation(), 5), 50, 1, 1, 1, 0.01);
         manaManager.startRegeneration(player);
     }
 }

@@ -2,7 +2,7 @@ package austxnsheep.spellsplus.commands;
 
 import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
-import austxnsheep.spellsplus.customItems.cICore;
+import austxnsheep.spellsplus.customItems.customItemsCore;
 import austxnsheep.spellsplus.data.dataManager;
 import austxnsheep.spellsplus.data.manaManager;
 import austxnsheep.spellsplus.execution.spellExecutor;
@@ -23,7 +23,7 @@ public class spellsPlus implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         Player effectedPlayer = getServer().getPlayer(args[1]);
-        cICore cicore = new cICore();
+        customItemsCore cicore = new customItemsCore();
         dataManager datamanager = new dataManager();
         File playerDataFile = datamanager.getPlayerDataFile(player.getUniqueId());
         if (player.isOp()) {
@@ -34,6 +34,10 @@ public class spellsPlus implements CommandExecutor {
             switch (args[0].toLowerCase()) {
                 case "help": {
                     sender.sendMessage(Core.getCommands());
+                    break;
+                }
+                case "devinfo": {
+                    player.sendMessage("Spells Plus V2.1 By austxnsheep");
                     break;
                 }
                 case "reload": {
@@ -62,7 +66,7 @@ public class spellsPlus implements CommandExecutor {
                     //       NBTItem nbti = new NBTItem(item);
                     //       String spell = nbti.getString("spell");
                     //       Integer manacost = nbti.getInteger("manacost");
-                    spellExecutor.ExecuteSpell(player, "Test1", 0);
+                    spellExecutor.ExecuteSpell(player, "Test1");
                     break;
                 }
                 case "addspell": {

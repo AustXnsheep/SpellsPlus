@@ -57,9 +57,9 @@ public class dataManager {
         }
     }
 
-    private void saveAllPlayerData() {
+    public void saveAllPlayerData() {
         for (Player player : getServer().getOnlinePlayers()) {
-            savePlayerData(player.getUniqueId());
+            this.savePlayerData(player.getUniqueId());
         }
     }
 

@@ -8,4 +8,4 @@ commands:
   spellsPlus:
     description: Used for allowing admins to change things
     usage: /spellsplus
-    permission: SpellsPlus.spellsplus
+    permission: SpellsPlus.admin

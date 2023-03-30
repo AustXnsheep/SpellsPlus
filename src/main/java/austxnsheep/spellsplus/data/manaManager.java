@@ -1,7 +1,7 @@
 package austxnsheep.spellsplus.data;
 
+import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -10,25 +10,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.io.IOException;
 
 public class manaManager extends JavaPlugin {
-    private static File manaFile;
-    private static YamlConfiguration manaData;
     private static final int regenerationRate = 10;
-    private static dataManager datamanager = new dataManager();
+    private static final dataManager datamanager = new dataManager();
+    private static final Core core = new Core();
 
     public static void startRegeneration(Player player) {
         Plugin This = new Main();
         new BukkitRunnable() {
             @Override
             public void run() {
-                int maxMana = (int) datamanager.getPlayerData(player.getUniqueId(), "CurrentMana");
+                //getProgressBar(int current, int max, int totalBars, String barChar, String completedColor, String notCompletedColor)
+                int maxMana = getMaxMana(player);
+                File file = datamanager.getPlayerDataFile(player.getUniqueId());
                 MetadataValue currentMana = getCurrentMana(player);
-
+                int maxmana = datamanager.readFile(file);
+                String progressbar = core.getProgressBar(currentMana.asInt(), maxmana, 40, "-", "ChatColor.GREEN", "ChatColor.GRAY");
+                player.sendActionBar(progressbar);
                 if (currentMana.asInt() < maxMana) {
-                    int regeneratedMana = regenerationRate;
-                    setCurrentMana(player, currentMana.asInt() + regeneratedMana);
+                    setCurrentMana(player, currentMana.asInt() + regenerationRate);
                 }
             }
         }.runTaskTimer(This, 20L, 20L); // regenerates every tick
@@ -44,14 +45,15 @@ public class manaManager extends JavaPlugin {
     }
     public static void setMaxMana(Player player, int mana) {
         dataManager datamanager = new dataManager();
-        File playerfile = datamanager.getPlayerDataFile(player.getUniqueId());
         datamanager.setPlayerData(player, "CurrentMana", mana);
+        saveManaFile(player);
     }
     public static int getMaxMana(Player player) {
         dataManager dataManager = new dataManager();
         File playerfile = dataManager.getPlayerDataFile(player.getUniqueId());
-        int finalint = dataManager.readFile(playerfile);
-        return finalint;
+        saveManaFile(player);
+        return dataManager.readFile(playerfile);
+
     }
 
     private static void saveManaFile(Player player) {
@@ -62,9 +64,6 @@ public class manaManager extends JavaPlugin {
         if (num1 > num2) {
             return true;
         }
-        if (num1 < num2) {
-            return false;
-        }
-        return true;
+        return num1 >= num2;
     }
 }

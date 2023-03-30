@@ -1,16 +1,14 @@
 package austxnsheep.spellsplus;
 
 import de.tr7zw.nbtapi.NBTItem;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Core {
     //Example of how to use this function 'Enable()'
@@ -42,7 +40,29 @@ public class Core {
             return;
         }
     }
+    public String getProgressBar(int current, int max, int totalBars, String barChar, String completedColor, String notCompletedColor) {
+        float percent = (float) current / max;
+        int progressBars = (int) (totalBars * percent);
+
+        return StringUtils.repeat(completedColor + barChar, progressBars)
+                + StringUtils.repeat(notCompletedColor + barChar, totalBars - progressBars);
+    }
     //Example of how to use this function 'addSpell(<Error in Sentence form>)'
+    public static Integer getManaCost(String spellname) {
+        if(Objects.equals(spellname, "Test1")) {
+            return 10;
+        }
+        if(Objects.equals(spellname, "Test2")) {
+            return 20;
+        }
+        if(Objects.equals(spellname, "Test3")) {
+            return 30;
+        }
+        if(Objects.equals(spellname, "Reflective Chaos")) {
+            return 50;
+        }
+        return 0;
+    }
     public static String returnError(String error) {
         return "Failed To Execute: " + error;
     }
@@ -74,7 +94,15 @@ public class Core {
                 "  executeSpell:\n" +
                 "    description: Executes the specified spell\n" +
                 "    usage: /spellsPlus executeSpell <Spell name>\n" +
-                "    permission: SpellsPlus.executeSpell\n" + ChatColor.RED +
+                "    permission: SpellsPlus.executeSpell\n" +
+                "  devInfo:\n" +
+                "    description: Information about this plugin\n" +
+                "    usage: /spellsPlus devinfo\n" +
+                "    permission: SpellsPlus.info\n" +
+                "  giveItem:\n" +
+                "    description: Gives the item you specify depending on the ID(You can find the ID for all items in the plugin config)\n" +
+                "    usage: /spellsPlus giveItem <Item ID>\n" +
+                "    permission: SpellsPlus.giveitem\n" + ChatColor.RED +
                 "Capitalization Matters.";
     }
 }

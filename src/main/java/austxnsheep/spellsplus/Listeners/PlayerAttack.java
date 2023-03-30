@@ -1,5 +1,6 @@
 package austxnsheep.spellsplus.Listeners;
 
+import austxnsheep.spellsplus.customItems.customItemEffects;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,14 +12,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class PlayerAttack implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        customItemEffects cieffects = new customItemEffects();
         if (event.getDamager() instanceof Player) {
             Entity victim = event.getEntity();
             Player damager = (Player) event.getDamager();
             ItemStack item = damager.getItemInHand();
             ItemMeta meta = item.getItemMeta();
-            if (meta.getCustomModelData()==1) {
-                victim.setFireTicks(5 * 20);
-            }
+            cieffects.executeItemEffect(damager, meta.getCustomModelData(), victim);
         }
     }
 }

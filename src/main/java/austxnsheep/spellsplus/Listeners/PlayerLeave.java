@@ -1,6 +1,5 @@
 package austxnsheep.spellsplus.Listeners;
 
-import jdk.jfr.Label;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

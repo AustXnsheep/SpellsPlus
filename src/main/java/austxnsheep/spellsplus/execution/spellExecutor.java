@@ -3,7 +3,6 @@ package austxnsheep.spellsplus.execution;
 import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
 import austxnsheep.spellsplus.data.manaManager;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
@@ -16,20 +15,21 @@ import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.color.NoteColor;
 
-import java.util.UUID;
+import java.util.Objects;
 
 public class spellExecutor {
     static Plugin cls = new Main();
     //How to use this function: ExecuteSpell(player, spell, manacost)
-    public static void ExecuteSpell(Player player, String spell, Integer manacost) {
+    public static void ExecuteSpell(Player player, String spell) {
         Vector playerDirection = player.getLocation().getDirection();
         Integer currentmana = player.getMetadata("CurrentMana").get(0).asInt();
+        int manacost = Core.getManaCost(spell);
         if(manaManager.checkMana(currentmana, manacost)) {
             player.sendMessage(Core.returnError("Not enough mana"));
             return;
         } //Checking to see if the player has enough mana
         //For testing the particles
-        if(spell=="Test1") {
+        if(Objects.equals(spell, "Test1")) {
             player.launchProjectile(Arrow.class, playerDirection);
             new ParticleBuilder(ParticleEffect.CRIT_MAGIC, player.getLocation())
                     .setParticleData(new NoteColor(1))
@@ -37,7 +37,7 @@ public class spellExecutor {
             return;
         }
         //For testing making entitys spawn
-        if(spell=="Test2") {
+        if(Objects.equals(spell, "Test2")) {
             Location loc = player.getEyeLocation();
             Vector dir = loc.getDirection().normalize();
             SmallFireball fireball = player.launchProjectile(SmallFireball.class, dir.multiply(2));
@@ -46,12 +46,15 @@ public class spellExecutor {
             return;
         }
         //For testing the soon to exist mana system
-        if(spell=="Test3") {
+        if(Objects.equals(spell, "Test3")) {
             World world = player.getWorld();
             Location loc = player.getTargetBlock(null, 50).getLocation();
             world.spawnEntity(loc, EntityType.valueOf("Creeper"));
             world.strikeLightning(loc);
             return;
+        }
+        if(Objects.equals(spell, "Reflective Chaos")) {
+
         }
     }
 }
