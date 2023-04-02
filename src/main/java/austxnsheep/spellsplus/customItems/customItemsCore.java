@@ -30,6 +30,16 @@ public class customItemsCore {
             item.setItemMeta(meta);
             return item;
         }
+        if (id==3) {
+            ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
+            item.addEnchantment(Enchantment.DAMAGE_ALL, 2);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.AQUA + "Thunderstrike Blade");
+            meta.setLore(Collections.singletonList("A electrifying-ly powerful blade"));
+            meta.setCustomModelData(3);
+            item.setItemMeta(meta);
+            return item;
+        }
         return null;
     }
 }

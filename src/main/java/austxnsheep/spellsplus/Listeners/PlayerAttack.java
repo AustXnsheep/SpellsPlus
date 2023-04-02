@@ -1,6 +1,6 @@
 package austxnsheep.spellsplus.Listeners;
 
-import austxnsheep.spellsplus.customItems.customItemEffects;
+import austxnsheep.spellsplus.customItems.customItemsEffects;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class PlayerAttack implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        customItemEffects cieffects = new customItemEffects();
+        customItemsEffects cieffects = new customItemsEffects();
         if (event.getDamager() instanceof Player) {
             Entity victim = event.getEntity();
             Player damager = (Player) event.getDamager();

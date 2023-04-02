@@ -3,6 +3,7 @@ package austxnsheep.spellsplus;
 
 import austxnsheep.spellsplus.Listeners.HandSwitch;
 import austxnsheep.spellsplus.Listeners.PlayerJoin;
+import austxnsheep.spellsplus.Listeners.PlayerLeave;
 import austxnsheep.spellsplus.commands.spellsPlus;
 import austxnsheep.spellsplus.data.dataManager;
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ public final class Main extends JavaPlugin {
         datamanager.saveAllPlayerData();
         this.reloadConfig();
         this.saveDefaultConfig();
+        this.registerEvent(new PlayerLeave());
         this.registerEvent(new PlayerJoin());
         this.registerEvent(new HandSwitch());
         this.registerCommand(new spellsPlus(), "spellPlus");
@@ -40,6 +42,15 @@ public final class Main extends JavaPlugin {
         datamanager.saveAllPlayerData();
         this.saveDefaultConfig();
         // Plugin shutdown logic
+    }
+    public void sendInfoToConsole(String msg) {
+        getLogger().info("[SpellsPlus] " + msg);
+    }
+    public void sendErrorToConsole(String msg) {
+        getLogger().severe("[SpellsPlus] " + msg);
+    }
+    public void sendWarningToConsole(String msg) {
+        getLogger().warning("[SpellsPlus] " + msg);
     }
     void registerEvent(Listener listener) {
         this.getServer().getPluginManager().registerEvents(listener, this);

@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
-import java.util.Objects;
 
 public class Core {
     //Example of how to use this function 'Enable()'
@@ -48,21 +47,6 @@ public class Core {
                 + StringUtils.repeat(notCompletedColor + barChar, totalBars - progressBars);
     }
     //Example of how to use this function 'addSpell(<Error in Sentence form>)'
-    public static Integer getManaCost(String spellname) {
-        if(Objects.equals(spellname, "Test1")) {
-            return 10;
-        }
-        if(Objects.equals(spellname, "Test2")) {
-            return 20;
-        }
-        if(Objects.equals(spellname, "Test3")) {
-            return 30;
-        }
-        if(Objects.equals(spellname, "Reflective Chaos")) {
-            return 50;
-        }
-        return 0;
-    }
     public static String returnError(String error) {
         return "Failed To Execute: " + error;
     }
