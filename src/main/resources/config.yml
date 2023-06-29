@@ -1,0 +1,8 @@
+#If this plugin is causing you issues you can report the issue at this github: https://github.com/AustXnsheep/SpellsPlus
+#BEFORE YOU SEND A ISSUE IN THE GITHUB MAKE SURE TO VERIFY IT IS CAUSED BY THE PLUGIN BY ITSELF
+
+#This without a doubt doesnt work.
+Spells Plus:
+  enabled: True #Incase you want to temporarily disable it
+  prefix: "[SpellsPlus] "
+  doCustomWorld: True #Incase you don't want the custom dimension

@@ -1,0 +1,15 @@
+name: SpellsPlus
+version: '${project.version}'
+main: austxnsheep.spellsplus.Main
+api-version: 1.19
+author: Austxnsheep
+
+commands:
+  spellsPlus:
+    description: Used for allowing admins to change things
+    usage: /spellsplus
+    permission: SpellsPlus.admin
+
+worlds:
+  arcanum:
+    generator: CustomChunkGenerator
