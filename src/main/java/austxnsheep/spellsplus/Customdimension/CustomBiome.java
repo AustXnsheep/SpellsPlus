@@ -1,16 +1,24 @@
 package austxnsheep.spellsplus.Customdimension;
 
-import net.minecraft.world.level.biome.Biome;
+import org.bukkit.block.Biome;
+import org.bukkit.generator.BiomeProvider;
+import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
 
-public class CustomBiome extends Biome.BiomeBuilder {
-    /*
-    public org.bukkit.block.@NotNull Biome getCustomBiome() {
-        Biome.BiomeBuilder customBiome = new Biome.BiomeBuilder();
-        customBiome.temperature(0.8F);
-        customBiome.downfall(0.4F);
-
-        return customBiome.build();
+import java.util.List;
+/*
+public class CustomBiome extends BiomeProvider {
+    @Override
+    public org.bukkit.block.@NotNull Biome getBiome(@NotNull WorldInfo worldInfo, int x, int y, int z) {
+        worldInfo.vanillaBiomeProvider();
+        Biome customBiome = worldInfo.vanillaBiomeProvider().getBiome(worldInfo, 1, 1, 1);
+        customBiome.
+        return null;
     }
-     */
+
+    @Override
+    public @NotNull List<org.bukkit.block.Biome> getBiomes(@NotNull WorldInfo worldInfo) {
+        return null;
+    }
 }
+*/

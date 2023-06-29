@@ -7,12 +7,8 @@ import austxnsheep.spellsplus.Listeners.PlayerJoin;
 import austxnsheep.spellsplus.Listeners.PlayerLeave;
 import austxnsheep.spellsplus.Commands.Spellsplus;
 import austxnsheep.spellsplus.Data.Datamanager;
-import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.v1_19_R3.generator.CustomChunkGenerator;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,7 +39,9 @@ public final class Main extends JavaPlugin {
         runnable.setCompletedColor(ChatColor.GREEN);
         runnable.setUncompletedColor(ChatColor.GRAY);
         runnable.runTaskTimer(this, 0, runnable.getRegenerationRate());
-        registerCustomDimension();
+        if (!isWorldCreated("arcanum")) {
+            registerCustomDimension();
+        }
         itemlores.put(1, "Decades of killing and mass murder allowed this\n" + "sword to take on a power of its own\n" + ChatColor.YELLOW + "Ability: " + ChatColor.GOLD + "Heated Blade\n " + ChatColor.DARK_GRAY + "Lights your opponent on fire for 1 second");
         itemlores.put(2, "It's an axe...\n" + ChatColor.YELLOW + "Ability: " + ChatColor.GOLD + "Rush\n " + ChatColor.DARK_GRAY + "The battle allows you to move faster");
         itemlores.put(3, "A electrifying-ly powerful blade\n" + ChatColor.YELLOW + "Ability: " + ChatColor.GOLD + "Lightning\n " + ChatColor.DARK_GRAY + "Summons a lightning strike on your victim");
@@ -76,11 +74,17 @@ public final class Main extends JavaPlugin {
         // Register the custom dimension
         World customDimension = worldCreator.createWorld();
         assert customDimension != null;
+        customDimension.setStorm(true);
         customDimension.setKeepSpawnInMemory(false);
         customDimension.setGameRuleValue("doDaylightCycle", "false");
         customDimension.setGameRuleValue("doWeatherCycle", "false");
         customDimension.setKeepSpawnInMemory(false);
         getLogger().info("Custom dimension registered successfully!");
+    }
+
+    public boolean isWorldCreated(String worldName) {
+        World world = Bukkit.getWorld(worldName);
+        return world != null;
     }
 
     void registerEvent(Listener listener) {
