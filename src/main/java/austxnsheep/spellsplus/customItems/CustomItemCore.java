@@ -1,6 +1,5 @@
 package austxnsheep.spellsplus.customItems;
 
-import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,12 +8,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
-public class Customitemcore {
-    public ItemStack getItem(int id) {
-        Core core = new Core();
+public interface CustomItemCore {
+    default ItemStack getItem(int id) {
         String finalLore = Main.itemlores.get(id);
         if (id==1) {
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD);

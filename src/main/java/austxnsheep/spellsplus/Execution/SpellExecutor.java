@@ -2,14 +2,12 @@ package austxnsheep.spellsplus.Execution;
 
 import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
-import austxnsheep.spellsplus.Data.Manamanager;
-import austxnsheep.spellsplus.Shapefunctions.Shapedfunctions;
-import com.destroystokyo.paper.ParticleBuilder;
+import austxnsheep.spellsplus.Data.ManaManager;
+import austxnsheep.spellsplus.Shapefunctions.ShapedFunctions;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
@@ -19,23 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Spellexecutor {
+public class SpellExecutor implements Core{
     //How to use this function: ExecuteSpell(player, spell, manacost)
     public static void ExecuteSpell(Player player, String spell) {
-        //Use hashmap
-        Core core = new Core();
-        Manamanager manamanager = new Manamanager();
+        ManaManager manamanager = new ManaManager();
         Vector playerDirection = player.getLocation().getDirection();
         Integer currentmana = manamanager.getCurrentMana(player);
-        int manacost = (int) Main.spellcosts.get(spell);
-        int manacase = manamanager.checkMana(currentmana, manacost);
-        if (manacase==1) {
-            player.sendMessage(Core.returnError("Not enough mana"));
-            return;
-        }
-        if (manacase==2) {
-            player.sendMessage(Core.returnError("Spell execution error: manacase = " + manacase));
-            return;
+        int manacost = Main.spellcosts.get(spell);
+        if (currentmana < manacost) {
+            player.sendMessage("Not enough mana!");
+           return;
         }
         //For testing making entitys spawn
         if(spell.equals("Test2")) {
@@ -58,7 +49,7 @@ public class Spellexecutor {
             //Creates variables for later use
             Location blockloc = player.getTargetBlock(null, 50).getLocation();
             Location loc = player.getLocation();
-            Shapedfunctions shapes = new Shapedfunctions();
+            ShapedFunctions shapes = new ShapedFunctions();
             Random random = new Random();
             //Creates the offsets that the next steps use to clone a new position
             int offsetX = player.getLocation().getBlockX() + random.nextInt(10);
@@ -85,7 +76,7 @@ public class Spellexecutor {
             Location blockloc = player.getTargetBlock(null, 50).getLocation();
             Location loc = player.getLocation();
             //A class that allows me to get the locations as a list for a line for example.
-            Shapedfunctions shapes = new Shapedfunctions();
+            ShapedFunctions shapes = new ShapedFunctions();
             Particle[] particles = Particle.values();
             Random random = new Random();
             //A new list to put those lines

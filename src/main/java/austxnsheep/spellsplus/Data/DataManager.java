@@ -9,18 +9,16 @@ import java.io.IOException;
 import java.util.UUID;
 
 //"maxMana"
-public class Datamanager {
+public class DataManager {
 
     private final String fileDir = "plugins/SpellsPlus/data";
 
     public File getPlayerDataFile(UUID uuid) {
-        File playerDataFile = new File(fileDir, uuid.toString() + ".yml");
-        return playerDataFile;
+        return new File(fileDir, uuid.toString() + ".yml");
     }
 
     private YamlConfiguration getPlayerDataConfig(UUID uuid) {
-        YamlConfiguration playerDataConfig = YamlConfiguration.loadConfiguration(getPlayerDataFile(uuid));
-        return playerDataConfig;
+        return YamlConfiguration.loadConfiguration(getPlayerDataFile(uuid));
     }
 
     public void savePlayerData(Player player) {

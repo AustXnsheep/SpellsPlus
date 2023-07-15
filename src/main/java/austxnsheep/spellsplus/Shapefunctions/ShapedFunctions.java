@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Shapedfunctions {
+public class ShapedFunctions {
     //drawCircle(3, player.getLocation(), 3) <-This would make a circle that is 3 blocks wide and that has 3 points, It by default will have more
     public static List<Location> drawCircle(Integer radius, Location center, float yaw, float pitch) {
         List<Location> locations = new ArrayList<>();

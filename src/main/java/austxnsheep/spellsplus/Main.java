@@ -2,46 +2,43 @@ package austxnsheep.spellsplus;
 
 import austxnsheep.spellsplus.Customdimension.CustomChunkMaker;
 import austxnsheep.spellsplus.Customdimension.CustomDimensionCore;
-import austxnsheep.spellsplus.Listeners.HandSwitch;
-import austxnsheep.spellsplus.Listeners.PlayerJoin;
-import austxnsheep.spellsplus.Listeners.PlayerLeave;
+import austxnsheep.spellsplus.Data.ManaManager;
+import austxnsheep.spellsplus.Entitys.SpellweaverSprite;
+import austxnsheep.spellsplus.Listeners.*;
 import austxnsheep.spellsplus.Commands.Spellsplus;
-import austxnsheep.spellsplus.Data.Datamanager;
+import austxnsheep.spellsplus.Data.DataManager;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
-public final class Main extends JavaPlugin {
-    public static Runnable runnable;
+public final class Main extends JavaPlugin implements Core {
+    public static ManaRunnable runnable;
+    public static Plugin instance;
     public String prefix = getConfig().getString("prefix");
-    public NamespacedKey currentmanakey = new NamespacedKey(this, "currentMana");
     public static HashMap<String, Integer> spellcosts = new HashMap<>();
     public static HashMap<Integer, String> itemlores = new HashMap<>();
 
     @Override
     public void onEnable() {
-        Core core = new Core();
+        instance = this;
         CustomDimensionCore ccg = new CustomDimensionCore();
         saveDefaultConfig();
         FileConfiguration config = getConfig();
-        Datamanager datamanager = new Datamanager();
+        DataManager datamanager = new DataManager();
         datamanager.saveAllPlayerData();
         this.registerEvent(new PlayerLeave());
         this.registerEvent(new PlayerJoin());
         this.registerEvent(new HandSwitch());
-        this.getCommand("spellsplus").setExecutor(new Spellsplus());
-        Runnable runnable = new Runnable();
-        runnable.setRegenerationRate(10);
-        runnable.setCompletedColor(ChatColor.GREEN);
-        runnable.setUncompletedColor(ChatColor.GRAY);
-        runnable.runTaskTimer(this, 0, runnable.getRegenerationRate());
-        if (!isWorldCreated("arcanum")) {
-            registerCustomDimension();
-        }
+        this.registerEvent(new PlayerDeath());
+        this.registerEvent(new PlayerAttack());
+        this.registerEvent(new PlayerInteract());
+        Objects.requireNonNull(this.getCommand("spellsplus")).setExecutor(new Spellsplus());
         itemlores.put(1, "Decades of killing and mass murder allowed this\n" + "sword to take on a power of its own\n" + ChatColor.YELLOW + "Ability: " + ChatColor.GOLD + "Heated Blade\n " + ChatColor.DARK_GRAY + "Lights your opponent on fire for 1 second");
         itemlores.put(2, "It's an axe...\n" + ChatColor.YELLOW + "Ability: " + ChatColor.GOLD + "Rush\n " + ChatColor.DARK_GRAY + "The battle allows you to move faster");
         itemlores.put(3, "A electrifying-ly powerful blade\n" + ChatColor.YELLOW + "Ability: " + ChatColor.GOLD + "Lightning\n " + ChatColor.DARK_GRAY + "Summons a lightning strike on your victim");
@@ -50,12 +47,21 @@ public final class Main extends JavaPlugin {
         spellcosts.put("Test2", 20);
         spellcosts.put("Test3", 30);
         spellcosts.put("Reflective Chaos", 40);
-        core.Enable();
+        Enable();
+        ManaRunnable runnable = new ManaRunnable();
+        CustomDimensionCore cdc = new CustomDimensionCore();
+        if (!cdc.isWorldCreated("arcanum")) {
+            cdc.createCustomDimension();
+        }
+        runnable.setRegenerationRate(10);
+        runnable.setCompletedColor(ChatColor.GREEN);
+        runnable.setUncompletedColor(ChatColor.GRAY);
+        runnable.runTaskTimer(this, 0, runnable.getRegenerationRate());
     }
 
     @Override
     public void onDisable() {
-        Datamanager datamanager = new Datamanager();
+        DataManager datamanager = new DataManager();
         datamanager.saveAllPlayerData();
         if (runnable != null) {
             runnable.cancel();
@@ -64,27 +70,8 @@ public final class Main extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    private void registerCustomDimension() {
-        // Create a new world with a custom environment
-        WorldCreator worldCreator = new WorldCreator("arcanum");
-        worldCreator.environment(World.Environment.NORMAL);
-
-        // Set the custom dimension type
-        worldCreator.generator(new CustomChunkMaker());
-        // Register the custom dimension
-        World customDimension = worldCreator.createWorld();
-        assert customDimension != null;
-        customDimension.setStorm(true);
-        customDimension.setKeepSpawnInMemory(false);
-        customDimension.setGameRuleValue("doDaylightCycle", "false");
-        customDimension.setGameRuleValue("doWeatherCycle", "false");
-        customDimension.setKeepSpawnInMemory(false);
-        getLogger().info("Custom dimension registered successfully!");
-    }
-
-    public boolean isWorldCreated(String worldName) {
-        World world = Bukkit.getWorld(worldName);
-        return world != null;
+    public static Main getInstance() {
+        return (Main) instance;
     }
 
     void registerEvent(Listener listener) {

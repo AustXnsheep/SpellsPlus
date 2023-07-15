@@ -12,8 +12,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 
-public class Customitemseffects {
-    public void executeOffensiveItemEffect(Player attacker, Integer id, Entity victim) {
+public interface CustomItemsEffects extends Core {
+    default void executeOffensiveItemEffect(Player attacker, Integer id, Entity victim) {
         if (id == null) {
             return;
         }
@@ -32,10 +32,9 @@ public class Customitemseffects {
                 break;
         }
     }
-    public void executeDefenceItemEffect(Player player, int id) {
+    default void executeDefenceItemEffect(Player player, int id) {
     }
-    public void executeNeutralItemEffect(Player player, int id) {
-        Core core = new Core();
+    default void executeNeutralItemEffect(Player player, int id) {
         switch (id) {
             case 4:
                 Location centerLocation = player.getLocation();

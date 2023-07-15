@@ -2,11 +2,14 @@ package austxnsheep.spellsplus.Commands;
 
 import austxnsheep.spellsplus.Core;
 import austxnsheep.spellsplus.Main;
-import austxnsheep.spellsplus.customItems.Customitemcore;
-import austxnsheep.spellsplus.Data.Datamanager;
-import austxnsheep.spellsplus.Data.Manamanager;
-import austxnsheep.spellsplus.Execution.Spellexecutor;
+import austxnsheep.spellsplus.customItems.CustomItemCore;
+import austxnsheep.spellsplus.Data.DataManager;
+import austxnsheep.spellsplus.Data.ManaManager;
+import austxnsheep.spellsplus.Execution.SpellExecutor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,22 +19,21 @@ import org.jetbrains.annotations.NotNull;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class Spellsplus implements CommandExecutor {
+public class Spellsplus implements CustomItemCore, CommandExecutor, Core {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         Player player = (Player) sender;
         Player effectedPlayer = getServer().getPlayer(args[1]);
-        Customitemcore cicore = new Customitemcore();
-        Datamanager datamanager = new Datamanager();
-        Manamanager manamanager = new Manamanager();
+        DataManager datamanager = new DataManager();
+        ManaManager manamanager = new ManaManager();
         if (player.isOp()) {
             if (args[0] == null) {
-                sender.sendMessage(Core.getCommands());
+                sender.sendMessage(getCommands());
                 return true;
             }
             switch (args[0].toLowerCase()) {
                 case "help": {
-                    sender.sendMessage(Core.getCommands());
+                    sender.sendMessage(getCommands());
                     break;
                 }
                 case "github": {
@@ -68,7 +70,7 @@ public class Spellsplus implements CommandExecutor {
                     //       NBTItem nbti = new NBTItem(item);
                     //       String spell = nbti.getString("spell");
                     //       Integer manacost = nbti.getInteger("manacost");
-                    Spellexecutor.ExecuteSpell(player, "Test1");
+                    SpellExecutor.ExecuteSpell(player, "Test1");
                     break;
                 }
                 case "addspell": {
@@ -78,7 +80,7 @@ public class Spellsplus implements CommandExecutor {
                     break;
                 }
                 case "giveitem": {
-                    player.getInventory().addItem(cicore.getItem(Integer.parseInt(args[1])));
+                    player.getInventory().addItem(getItem(Integer.parseInt(args[1])));
                     break;
                 }
                 case "runnableinfo": {
@@ -86,13 +88,30 @@ public class Spellsplus implements CommandExecutor {
                     ChatColor completedcolor = Main.runnable.getCompletedChatcolor();
                     int regenerationRate = Main.runnable.getRegenerationRate();
                     player.sendMessage("RegenerationRate: " + regenerationRate, "Uncompleted chat color: " + uncompletedcolor, "Completed chat color: " + completedcolor);
+                    break;
+                }
+                case "warp": {
+                    if (Bukkit.getWorld(args[1]) == null) {
+                        player.sendMessage("Failed to teleport: World does not exist.");
+                        return false;
+                    }
+                    if (args[1] == null) {
+                        player.sendMessage("Failed to teleport: Please specify a world by name.");
+                        return false;
+                    }
+                    player.sendMessage("Warping to dimension: " + args[1]);
+                    World world = Bukkit.getWorld(args[1]);
+                    Location destination = player.getLocation().clone();
+                    destination.setWorld(world);
+                    player.teleport(destination);
+                    break;
                 }
                 default: {
-                    sender.sendMessage(Core.getCommands());
+                    sender.sendMessage(getCommands());
                 }
             }
         } else {
-          player.sendMessage(Core.returnError("Not an operator."));
+          player.sendMessage(returnError("Not an operator."));
           return true;
         }
         return true;

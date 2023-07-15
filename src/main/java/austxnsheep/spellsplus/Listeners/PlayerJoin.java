@@ -1,8 +1,8 @@
 package austxnsheep.spellsplus.Listeners;
 
-import austxnsheep.spellsplus.Data.Datamanager;
-import austxnsheep.spellsplus.Data.Manamanager;
-import austxnsheep.spellsplus.Shapefunctions.Shapedfunctions;
+import austxnsheep.spellsplus.Data.DataManager;
+import austxnsheep.spellsplus.Data.ManaManager;
+import austxnsheep.spellsplus.Shapefunctions.ShapedFunctions;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -17,11 +17,11 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         //drawPolygon(Integer sides, Location center, Integer radius)
         Player player = event.getPlayer();
-        Datamanager dataManager = new Datamanager();
-        Manamanager manamanager = new Manamanager();
+        DataManager dataManager = new DataManager();
+        ManaManager manamanager = new ManaManager();
         dataManager.createPlayerDataFile(event.getPlayer());
 
-        List<Location> loclist = Shapedfunctions.drawCircle(5, player.getLocation(), 0, 0);
+        List<Location> loclist = ShapedFunctions.drawCircle(5, player.getLocation(), 0, 0);
         manamanager.setCurrentMana(player, 100);
         dataManager.setPlayerData(player, "maxMana", 100);
         if(!player.hasPlayedBefore()) {

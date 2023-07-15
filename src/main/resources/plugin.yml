@@ -1,6 +1,6 @@
 name: SpellsPlus
-version: '${project.version}'
 main: austxnsheep.spellsplus.Main
+version: 1.19
 api-version: 1.19
 author: Austxnsheep
 
@@ -12,4 +12,4 @@ commands:
 
 worlds:
   arcanum:
-    generator: CustomChunkGenerator
+    generator: CustomChunkMaker

@@ -1,6 +1,6 @@
 package austxnsheep.spellsplus.Listeners;
 
-import austxnsheep.spellsplus.Execution.Spellexecutor;
+import austxnsheep.spellsplus.Execution.SpellExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +15,7 @@ public class HandSwitch implements Listener {
         //       NBTItem nbti = new NBTItem(item);
         //       String spell = nbti.getString("spell");
         //       Integer manacost = nbti.getInteger("manacost");
-        Spellexecutor.ExecuteSpell(player, "Test2");
+        SpellExecutor.ExecuteSpell(player, "Test2");
     }
 
 }

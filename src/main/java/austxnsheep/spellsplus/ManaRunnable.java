@@ -1,24 +1,22 @@
 package austxnsheep.spellsplus;
 
-import austxnsheep.spellsplus.Data.Datamanager;
-import austxnsheep.spellsplus.Data.Manamanager;
+import austxnsheep.spellsplus.Data.DataManager;
+import austxnsheep.spellsplus.Data.ManaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Runnable extends BukkitRunnable {
+public class ManaRunnable extends BukkitRunnable {
     private static int regenerationRate = 10;
 
     private static ChatColor completedChatColor = ChatColor.GREEN;
 
     private static ChatColor uncompletedChatColor = ChatColor.GRAY;
 
-    private static final Datamanager datamanager = new Datamanager();
+    private static final DataManager datamanager = new DataManager();
 
-    private static final Manamanager manamanager = new Manamanager();
-
-    private static final Core core = new Core();
+    private static final ManaManager manamanager = new ManaManager();
 
     private Player player;
 
@@ -31,16 +29,16 @@ public class Runnable extends BukkitRunnable {
             //getProgressBar(int current, int max, int totalBars, String barChar, String completedColor, String notCompletedColor)
             int maxMana = (int) datamanager.getPlayerData(player, "maxMana");
             int currentMana = manamanager.getCurrentMana(player);
-            String progressbar = core.getProgressBar(currentMana, maxMana, 40, "-", this.getCompletedChatcolor().toString(), this.getUncompletedChatcolor().toString());
+            String progressbar = manamanager.getProgressBar(currentMana, maxMana, 40, "-", this.getCompletedChatcolor().toString(), this.getUncompletedChatcolor().toString());
             player.sendActionBar(progressbar);
             if (currentMana < maxMana) {
                 manamanager.setCurrentMana(player, currentMana + getRegenerationRate());
             }
         }
-
     }
 
     //setters
+
     public void setRegenerationRate(int speed) {
         this.regenerationRate = speed;
     }
@@ -53,15 +51,7 @@ public class Runnable extends BukkitRunnable {
         this.uncompletedChatColor = color;
     }
 
-    public void setPlayerRunnable(Player player) {
-        this.player = player;
-    }
-
-
     //getters
-    public Player getPlayerRunnable() {
-        return this.player;
-    }
 
     public ChatColor getUncompletedChatcolor() {
         return this.uncompletedChatColor;
